@@ -44,4 +44,4 @@ const todaysQuote = quotes[Math.floor(Math.random() * quotes.length)]
 
 console.log(todaysQuote)
 quote.innerText = todaysQuote.quote
-author.innerText = todaysQuote.author
+author.innerText = `'${todaysQuote.author}'`

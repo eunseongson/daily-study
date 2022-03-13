@@ -26,14 +26,15 @@ function toDoPaint(todo) {
   const li = document.createElement('li')
   const span = document.createElement('span')
   const button = document.createElement('button')
-  span.innerText = todo.text
+  const x = '❌'
+  span.innerText = x + todo.text
   toDos.push(todo)
-  button.innerText = '❌'
+  // button.innerText = '❌'
   saveToDos()
   button.addEventListener('click', removeButton)
   li.id = todo.id
   li.appendChild(span)
-  li.appendChild(button)
+  // li.appendChild(button)
   toDoList.appendChild(li)
 }
 
