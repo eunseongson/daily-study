@@ -25,16 +25,16 @@ function removeButton(e) {
 function toDoPaint(todo) {
   const li = document.createElement('li')
   const span = document.createElement('span')
-  const button = document.createElement('button')
-  const x = '❌'
-  span.innerText = x + todo.text
+  const remove = document.createElement('span')
+  remove.innerText = '❌'
+  remove.id = 'remove'
+  span.innerText = todo.text
   toDos.push(todo)
-  // button.innerText = '❌'
   saveToDos()
-  button.addEventListener('click', removeButton)
+  remove.addEventListener('click', removeButton)
   li.id = todo.id
+  li.appendChild(remove)
   li.appendChild(span)
-  // li.appendChild(button)
   toDoList.appendChild(li)
 }
 

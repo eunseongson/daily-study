@@ -72,9 +72,14 @@ img {
   margin-bottom: 30px;
 }
 #todo-list {
+  padding-left: 0;
   list-style: none;
   color: white;
   font-size: 20px;
+}
+
+#todo-list #remove {
+  cursor: pointer;
 }
 
 #todo-form input {
