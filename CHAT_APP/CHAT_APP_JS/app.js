@@ -19,18 +19,11 @@ app.get('/', function (req, res) {
   })
 })
 
+let room = ['1', '2']
+let a = 0
+
 io.sockets.on('connection', function (socket) {
-  socket.on('newUserConnect', function (name) {
-    socket.name = name
-
-    var message = name + '님이 접속했습니다'
-
-    io.sockets.emit('updateMessage', {
-      name: 'SERVER',
-      message: message,
-    })
-  })
-
+  // socket disconnect
   socket.on('disconnect', function () {
     var message = socket.name + '님이 퇴장했습니다'
     socket.broadcast.emit('updateMessage', {
@@ -39,10 +32,29 @@ io.sockets.on('connection', function (socket) {
     })
   })
 
-  socket.on('sendMessage', function (data) {
-    data.name = socket.name
-    io.sockets.emit('updateMessage', data)
+  socket.on('leaveRoom', (num, name) => {
+    socket.leave(room[num], () => {
+      console.log(name + 'leave a ' + room[num])
+      io.to(room[num]).emit('leaveRoom', num, name)
+    })
   })
+
+  socket.on('joinRoom', (num, name) => {
+    socket.join(room[num], () => {
+      console.log(name + 'join a ' + room[num])
+      io.to(room[num]).emit('joinRoom', num, name)
+    })
+  })
+
+  socket.on('chat message', (num, name, msg) => {
+    a = num
+    io.to(room[a]).emit('chat message', name, msg)
+  })
+
+  // socket.on('sendMessage', function (data) {
+  //   data.name = socket.name
+  //   io.sockets.emit('updateMessage', data)
+  // })
 })
 
 server.listen(8080, function () {

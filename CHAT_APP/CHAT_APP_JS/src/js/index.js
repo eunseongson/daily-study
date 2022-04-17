@@ -1,14 +1,17 @@
 'use strict'
 
-var socket = io()
+const socket = io()
 
 socket.on('connect', function () {
   var name = prompt('이름을 입력해주세요.', '')
   socket.emit('newUserConnect', name)
 })
 
-var chatWindow = document.getElementById('chatWindow')
-socket.on('updateMessage', function (data) {
+let room = ['1', '2']
+let a = 0
+
+const chatWindow = document.getElementById('chatWindow')
+socket.on('chat message', function (data) {
   if (data.name === 'SERVER') {
     var infoEl = document.getElementById('info')
     infoEl.innerHTML = data.message
@@ -25,9 +28,9 @@ socket.on('updateMessage', function (data) {
 })
 
 function drawChatMessage(data) {
-  var wrap = document.createElement('p')
-  var message = document.createElement('span')
-  var name = document.createElement('span')
+  const wrap = document.createElement('p')
+  const message = document.createElement('span')
+  const name = document.createElement('span')
 
   name.innerText = data.name
   message.innerText = data.message
@@ -44,11 +47,11 @@ function drawChatMessage(data) {
   return wrap
 }
 
-var sendButton = document.getElementById('chatMessageSendBtn')
-var chatInput = document.getElementById('chatInput')
+const sendButton = document.getElementById('chatMessageSendBtn')
+const chatInput = document.getElementById('chatInput')
 
 sendButton.addEventListener('click', function () {
-  var message = chatInput.value
+  let message = chatInput.value
   if (!message) return false
 
   socket.emit('sendMessage', {
